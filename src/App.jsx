@@ -198,8 +198,8 @@ const GlobalNetworkViz = () => {
     { name: 'Singapore', x: 72, y: 60, status: 'expanding', color: '#00d4ff' },
     { name: 'Dubai', x: 55, y: 48, status: 'expanding', color: '#00d4ff' },
     { name: 'Hong Kong', x: 78, y: 45, status: 'target', color: 'rgba(255,255,255,0.4)' },
-    { name: 'London', x: 45, y: 30, status: 'target', color: 'rgba(255,255,255,0.4)' },
-    { name: 'New York', x: 25, y: 35, status: 'target', color: 'rgba(255,255,255,0.4)' },
+    { name: 'London', x: 45, y: 30, status: 'target', color: '#ffffff' },
+    { name: 'New York', x: 25, y: 35, status: 'target', color: '#ffffff' },
     { name: 'Shanghai', x: 80, y: 40, status: 'surprise', color: '#ff4444' },
   ];
 
@@ -530,7 +530,7 @@ const Nav = ({ navigateTo, currentPage, productsOpen, setProductsOpen }) => (
       </div>
       <div style={styles.navLinks}>
         {/* Products Dropdown */}
-        <div className="products-dropdown" style={{position: 'relative'}}>
+        <div className="products-dropdown" style={{position: 'relative', display: 'flex', alignItems: 'center'}}>
           <a 
             href="#" 
             className="nav-link" 
@@ -538,7 +538,7 @@ const Nav = ({ navigateTo, currentPage, productsOpen, setProductsOpen }) => (
             onClick={(e) => { e.preventDefault(); setProductsOpen(!productsOpen); }}
           >
             Products
-            <span style={{marginLeft: '6px', fontSize: '10px'}}>▼</span>
+            <span style={{marginLeft: '6px', fontSize: '10px', lineHeight: 1}}>▼</span>
           </a>
           {productsOpen && (
             <div className="products-menu">
@@ -587,13 +587,23 @@ const S1_Hero = () => (
     }} />
     
     <div style={styles.heroContent}>
-      {/* Prominent Platform Badge */}
-      <div style={styles.heroBadgeProminent}>
-        <div style={styles.badgeGlow} />
-        <div style={styles.badgeIcon}>
-          <span style={styles.badgeIconInner}>◈</span>
-        </div>
-        <span style={styles.heroBadgeTextLarge}>Global Trade Finance Platform</span>
+      {/* Badge */}
+      <div style={{marginBottom: '32px'}}>
+        <span style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '8px 20px',
+          backgroundColor: 'rgba(200,255,0,0.1)',
+          border: '1px solid rgba(200,255,0,0.2)',
+          borderRadius: '50px',
+          color: '#c8ff00',
+          fontSize: '13px',
+          fontWeight: '500',
+        }}>
+          <span style={{width: '6px', height: '6px', backgroundColor: '#c8ff00', borderRadius: '50%'}} />
+          Global Trade Finance Platform
+        </span>
       </div>
       
       <h1 style={styles.heroTitle}>
@@ -606,7 +616,11 @@ const S1_Hero = () => (
       </p>
       
       <div style={styles.heroActions}>
-        <button className="primary-btn" style={styles.primaryButton}>
+        <button 
+          className="primary-btn" 
+          style={styles.primaryButton}
+          onClick={() => document.getElementById('s3-pillars')?.scrollIntoView({ behavior: 'smooth' })}
+        >
           Explore Platform
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{marginLeft: '8px'}}>
             <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -784,7 +798,7 @@ const TradeFinanceViz = () => (
     
     {/* Center Token Label */}
     <circle cx="100" cy="50" r="14" fill="rgba(200,255,0,0.06)" stroke="rgba(200,255,0,0.3)" strokeWidth="1"/>
-    <text x="100" y="54" textAnchor="middle" fontSize="9" fill="#c8ff00" fontWeight="600">TT</text>
+    <image href="https://res.cloudinary.com/du874xj8n/image/upload/v1766729636/xaults-favicon_hzyax8.svg" x="91" y="41" width="18" height="18" style={{pointerEvents: 'none'}} />
     
     {/* Step 1: Importer Node - Left (Starting Point) */}
     <g>
@@ -1012,8 +1026,8 @@ const WorldMapViz = () => {
     name: "London",
     lat: 51.5074,
     lng: -0.1278,
-    color: "#c8ff00",
-    glow: "glowGreen",
+    color: "#ffffff",
+    glow: "glowWhite",
     labelOffset: -18,
     hubClass: "hub-4",
     delay: "1.8s"
@@ -1023,8 +1037,8 @@ const WorldMapViz = () => {
     name: "New York",
     lat: 40.7128,
     lng: -74.006,
-    color: "#c8ff00",
-    glow: "glowGreen",
+    color: "#ffffff",
+    glow: "glowWhite",
     labelOffset: 28,
     hubClass: "hub-5",
     delay: "2.4s"
@@ -1372,6 +1386,13 @@ function mercatorProjection(lat, lng) {
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
+        <filter id="glowWhite">
+          <feGaussianBlur stdDeviation="10" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
 
         <style>{`
           @keyframes sequentialLight {
@@ -1598,25 +1619,25 @@ function mercatorProjection(lat, lng) {
         </text>
       </g>
 
-      4. London - Green/Lime
+      4. London - White
       <g transform="translate(280, 140)" className="all-glow">
         <circle
           r="0"
-          fill="rgba(200,255,0,0.15)"
+          fill="rgba(255,255,255,0.15)"
           className="ring-pulse"
           style={{ animationDelay: "1.8s" }}
         />
         <circle
           r="10"
-          fill="#c8ff00"
+          fill="#ffffff"
           className="hub-4"
-          filter="url(#glowGreen)"
+          filter="url(#glowWhite)"
         />
         <text
           y="-18"
           textAnchor="middle"
           fontSize="12"
-          fill="#c8ff00"
+          fill="#ffffff"
           fontWeight="500"
           className="hub-4"
         >
@@ -1624,25 +1645,25 @@ function mercatorProjection(lat, lng) {
         </text>
       </g>
 
-      5. New York - Green/Lime
+      5. New York - White
       <g transform="translate(150, 180)" className="all-glow">
         <circle
           r="0"
-          fill="rgba(200,255,0,0.15)"
+          fill="rgba(255,255,255,0.15)"
           className="ring-pulse"
           style={{ animationDelay: "2.4s" }}
         />
         <circle
           r="10"
-          fill="#c8ff00"
+          fill="#ffffff"
           className="hub-5"
-          filter="url(#glowGreen)"
+          filter="url(#glowWhite)"
         />
         <text
           y="28"
           textAnchor="middle"
           fontSize="12"
-          fill="#c8ff00"
+          fill="#ffffff"
           fontWeight="500"
           className="hub-5"
         >
@@ -2290,7 +2311,7 @@ const S6B_PlatformFeatures = () => (
     {/* Centered Heading */}
     <div style={{textAlign: 'center', marginBottom: '60px'}}>
       <h2 style={styles.platformFeaturesTitle}>
-        Everything You Need for Modern Trade Finance
+        Everything You Need for Modern Trade Finance in One Platform.
       </h2>
     </div>
     
@@ -2852,7 +2873,6 @@ const Page_DTSCF = () => {
   const sliderRef = useRef(null);
   const [altDescription, setAltDescription] = useState(false);
   const [showCalculator, setShowCalculator] = useState(false);
-  const [showProblem, setShowProblem] = useState(false);
   const [expandedBenefit, setExpandedBenefit] = useState('banks');
   const [expandAllBenefits, setExpandAllBenefits] = useState(false);
   
@@ -2954,7 +2974,7 @@ const Page_DTSCF = () => {
               fontWeight: '500',
             }}>
               <span style={{width: '6px', height: '6px', backgroundColor: '#c8ff00', borderRadius: '50%'}} />
-              India's First Tokenised Supply Chain
+              India's First Tokenised
             </span>
           </div>
           
@@ -3215,132 +3235,6 @@ const Page_DTSCF = () => {
           </div>
         </div>
       </section>
-      
-      {/* SECTION 2 - Comparable Rates Calculator */}
-      {/* Dev Toggle for Calculator */}
-      <div style={{position: 'relative', height: 0, overflow: 'visible'}}>
-        <div 
-          onClick={() => setShowCalculator(!showCalculator)}
-          style={{
-            position: 'absolute',
-            top: '-15px',
-            right: '40px',
-            width: '10px',
-            height: '10px',
-            borderRadius: '50%',
-            backgroundColor: showCalculator ? '#c8ff00' : '#22c55e',
-            opacity: 0.3,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-            zIndex: 100,
-          }}
-          title="Toggle Calculator section"
-        />
-      </div>
-      {showCalculator && (
-      <section style={{padding: '100px 24px', position: 'relative'}}>
-        <div style={{maxWidth: '1200px', margin: '0 auto'}}>
-          <div style={{textAlign: 'center', marginBottom: '60px'}}>
-            <h2 style={{
-              fontSize: '42px',
-              fontWeight: '700',
-              color: '#fff',
-              marginBottom: '16px',
-            }}>Financing Rate Calculator</h2>
-            <p style={{
-              fontSize: '18px',
-              color: 'rgba(255,255,255,0.6)',
-              maxWidth: '600px',
-              margin: '0 auto',
-            }}>See how deep-tier financing transforms borrowing costs across supply chain tiers</p>
-          </div>
-          
-          <DTSCFRateCalculator />
-        </div>
-      </section>
-      )}
-      
-      {/* SECTION 3 - Problem Statement (Previous Hero Content) */}
-      {/* Dev Toggle for Problem section */}
-      <div style={{position: 'relative', height: 0, overflow: 'visible'}}>
-        <div 
-          onClick={() => setShowProblem(!showProblem)}
-          style={{
-            position: 'absolute',
-            top: '-15px',
-            right: '60px',
-            width: '10px',
-            height: '10px',
-            borderRadius: '50%',
-            backgroundColor: showProblem ? '#c8ff00' : '#22c55e',
-            opacity: 0.3,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-            zIndex: 100,
-          }}
-          title="Toggle Problem section"
-        />
-      </div>
-      {showProblem && (
-      <section style={{padding: '100px 24px', position: 'relative'}}>
-        <div style={{maxWidth: '1200px', margin: '0 auto'}}>
-          {/* Badge - Centered */}
-          <div style={{display: 'flex', justifyContent: 'center', marginBottom: '40px'}}>
-            <div style={styles.heroBadge}>
-              <span style={styles.heroBadgeDot} />
-              The Problem
-            </div>
-          </div>
-          
-          <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start'}}>
-            {/* Left Content */}
-            <div>
-              <h2 style={{
-                fontSize: '52px',
-                fontWeight: '700',
-                lineHeight: '1.1',
-                marginBottom: '32px',
-                color: '#fff',
-              }}>
-                Cashflow<br />
-                <span style={{color: '#c8ff00'}}>Unlocked.</span>
-              </h2>
-              <p style={{
-                fontSize: '18px',
-                lineHeight: '1.8',
-                color: 'rgba(255,255,255,0.65)',
-                maxWidth: '520px',
-              }}>
-                Traditional finance was not built for the smaller suppliers buried deep in today's complex supply chains. They face long payment cycles, little formal credit history, and a stark choice between slowing down or taking on costly, informal finance.
-              </p>
-            </div>
-            
-            {/* Right - Stats Card */}
-            <div style={{
-              backgroundColor: 'rgba(255,255,255,0.03)',
-              borderRadius: '20px',
-              padding: '40px',
-              border: '1px solid rgba(255,255,255,0.08)',
-            }}>
-              <div style={{textAlign: 'center', marginBottom: '32px', paddingBottom: '32px', borderBottom: '1px solid rgba(255,255,255,0.08)'}}>
-                <div style={{fontSize: '52px', fontWeight: '700', color: '#c8ff00', marginBottom: '8px'}}>14-20%</div>
-                <div style={{fontSize: '15px', color: 'rgba(255,255,255,0.5)'}}>Higher borrowing costs for SMEs</div>
-              </div>
-              <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                  <span style={{color: 'rgba(255,255,255,0.4)', fontSize: '14px', fontWeight: '500'}}>Limited</span>
-                  <span style={{color: 'rgba(255,255,255,0.7)', fontSize: '14px', textAlign: 'right'}}>Participation in global supply chains</span>
-                </div>
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                  <span style={{color: 'rgba(255,255,255,0.4)', fontSize: '14px', fontWeight: '500'}}>Blocked</span>
-                  <span style={{color: 'rgba(255,255,255,0.7)', fontSize: '14px', textAlign: 'right'}}>Cash flow bottlenecks restrict growth</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      )}
       
       {/* ORIGINAL SLIDER SECTION - COMMENTED OUT
       <section style={{padding: '80px 24px', position: 'relative'}}>
@@ -3695,11 +3589,14 @@ const Page_DTSCF = () => {
                 cursor: isImageSliderDragging ? 'grabbing' : 'grab',
                 opacity: isImageSliderHovered ? 1 : 0,
                 transition: 'opacity 0.3s ease',
+                overflow: 'hidden',
               }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8ff00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 8L22 12L18 16"/>
-                  <path d="M6 8L2 12L6 16"/>
-                </svg>
+                <img 
+                  src="https://res.cloudinary.com/du874xj8n/image/upload/v1766729636/xaults-favicon_hzyax8.svg" 
+                  alt=""
+                  draggable="false"
+                  style={{width: '42px', height: '42px', pointerEvents: 'none', userSelect: 'none'}}
+                />
               </div>
             </div>
             
@@ -3880,6 +3777,50 @@ const Page_DTSCF = () => {
           </div>
         </div>
       </section>
+      
+      {/* Financing Rate Calculator */}
+      {/* Dev Toggle for Calculator */}
+      <div style={{position: 'relative', height: 0, overflow: 'visible'}}>
+        <div 
+          onClick={() => setShowCalculator(!showCalculator)}
+          style={{
+            position: 'absolute',
+            top: '-15px',
+            right: '40px',
+            width: '10px',
+            height: '10px',
+            borderRadius: '50%',
+            backgroundColor: showCalculator ? '#c8ff00' : '#22c55e',
+            opacity: 0.3,
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            zIndex: 100,
+          }}
+          title="Toggle Calculator section"
+        />
+      </div>
+      {showCalculator && (
+      <section style={{padding: '100px 24px', position: 'relative'}}>
+        <div style={{maxWidth: '1200px', margin: '0 auto'}}>
+          <div style={{textAlign: 'center', marginBottom: '60px'}}>
+            <h2 style={{
+              fontSize: '42px',
+              fontWeight: '700',
+              color: '#fff',
+              marginBottom: '16px',
+            }}>Financing Rate Calculator</h2>
+            <p style={{
+              fontSize: '18px',
+              color: 'rgba(255,255,255,0.6)',
+              maxWidth: '600px',
+              margin: '0 auto',
+            }}>See how deep-tier financing transforms borrowing costs across supply chain tiers</p>
+          </div>
+          
+          <DTSCFRateCalculator />
+        </div>
+      </section>
+      )}
       
       {/* Deploy Capital without Friction */}
       <section style={{padding: '100px 24px', position: 'relative'}}>
@@ -7492,7 +7433,6 @@ const Page_About = () => {
     <>
       {/* HERO - First Fold */}
       <section style={{
-        minHeight: '100vh',
         padding: '140px 24px 80px',
         position: 'relative',
         overflow: 'hidden',
@@ -7571,6 +7511,7 @@ const Page_About = () => {
               }
             </p>
             
+            {altDesc && (
             <p style={{
               fontSize: '24px',
               lineHeight: '1.5',
@@ -7579,6 +7520,7 @@ const Page_About = () => {
             }}>
               We are building that global principle infrastructure.
             </p>
+            )}
           </div>
           
         </div>
@@ -8238,6 +8180,7 @@ const styles = {
   },
   navLinks: {
     display: 'flex',
+    alignItems: 'center',
     gap: '40px',
   },
   navLink: {
@@ -8246,6 +8189,8 @@ const styles = {
     fontSize: '14px',
     fontWeight: '400',
     transition: 'color 0.2s',
+    display: 'flex',
+    alignItems: 'center',
   },
   navCTA: {
     backgroundColor: 'transparent',
@@ -8261,12 +8206,11 @@ const styles = {
   
   // Hero
   heroSection: {
-    minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '140px 60px 80px',
+    padding: '140px 60px 0px',
     position: 'relative',
     textAlign: 'center',
   },
